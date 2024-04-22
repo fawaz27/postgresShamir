@@ -22,6 +22,7 @@
 #include "storage/bufmgr.h"
 #include "storage/ipc.h"
 #include "storage/md.h"
+#include "storage/sp.h"
 #include "storage/smgr.h"
 #include "utils/hsearch.h"
 #include "utils/inval.h"
@@ -80,6 +81,23 @@ static const f_smgr smgrsw[] = {
 		.smgr_nblocks = mdnblocks,
 		.smgr_truncate = mdtruncate,
 		.smgr_immedsync = mdimmedsync,
+	},
+	/* server page */
+	{
+		.smgr_init = spinit,
+		.smgr_shutdown = NULL,
+		.smgr_close = spclose,
+		.smgr_create = spcreate,
+		.smgr_exists = spexists,
+		.smgr_unlink = spunlink,
+		.smgr_extend = spextend,
+		.smgr_prefetch = spprefetch,
+		.smgr_read = spread,
+		.smgr_write = spwrite,
+		.smgr_writeback = spwriteback,
+		.smgr_nblocks = spnblocks,
+		.smgr_truncate = sptruncate,
+		.smgr_immedsync = spimmedsync,
 	}
 };
 
